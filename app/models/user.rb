@@ -22,6 +22,10 @@ class User < ApplicationRecord
     relationship = self.relationships.find_by(follow_id: other_user.id)
     relationship.destroy if relationship
   end
+  
+    def feed_microposts
+    Micropost.where(user_id: self.following_ids + [self.id])
+  end
 
   def following?(other_user)
     self.followings.include?(other_user)
